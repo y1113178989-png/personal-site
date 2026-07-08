@@ -1,0 +1,53 @@
+---
+const { experience, locale } = Astro.props;
+const title = experience?.data?.title ?? (locale === 'zh' ? '工作经历' : 'Experience');
+const jobs = experience?.data?.jobs ?? [];
+---
+
+<section class="experience section" id="experience">
+  <div class="container">
+    <h2 class="section-title">{title}</h2>
+    <ul class="timeline">
+      {jobs.map((job: any) => (
+        <li class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-company">{job.company}</h3>
+            <span class="job-date">
+              {job.startDate} — {job.endDate || (locale === 'zh' ? '至今' : 'Present')}
+            </span>
+          </div>
+          <p class="job-role">{job.role}</p>
+          <p class="job-desc">{job.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+  .job-company {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+  .job-date {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+  .job-role {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+  .job-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+</style>

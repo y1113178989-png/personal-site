@@ -1,0 +1,24 @@
+---
+import { t } from '../../i18n/ui';
+
+const { locale } = Astro.props;
+const otherLocale = locale === 'zh' ? 'en' : 'zh';
+const otherPath = Astro.url.pathname.replace(`/${locale}/`, `/${otherLocale}/`);
+---
+
+<span class="lang-switcher">
+  <a href={otherPath} class:list={['lang-link']}>
+    {t(locale, 'lang.switch')}
+  </a>
+</span>
+
+<style>
+  .lang-link {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+  .lang-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+</style>

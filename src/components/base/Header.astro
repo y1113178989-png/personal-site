@@ -1,0 +1,71 @@
+---
+import LanguageSwitcher from '../ui/LanguageSwitcher.astro';
+import { t } from '../../i18n/ui';
+
+const { site, locale } = Astro.props;
+
+const navItems = [
+  { href: '#about', key: 'nav.about' as const },
+  { href: '#experience', key: 'nav.experience' as const },
+  { href: '#skills', key: 'nav.skills' as const },
+  { href: '#contact', key: 'nav.contact' as const },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={`/${locale}/`} class="logo">{site?.data?.name ?? 'Name'}</a>
+    <nav class="nav" aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}>
+      {navItems.map(({ href, key }) => (
+        <a href={href} class="nav-link">{t(locale, key)}</a>
+      ))}
+      <LanguageSwitcher {locale} />
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(8px);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.5rem;
+  }
+  .logo {
+    font-weight: 600;
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .nav-link {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .nav {
+      gap: var(--space-sm);
+    }
+    .nav-link {
+      font-size: var(--text-xs);
+    }
+  }
+</style>

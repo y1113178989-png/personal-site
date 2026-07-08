@@ -1,0 +1,18 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+
+const { experience, locale } = Astro.props;
+const skills: string[] = experience?.data?.skills ?? [];
+const title = t(locale as Locale, 'nav.skills');
+---
+
+<section class="skills section section-alt" id="skills">
+  <div class="container">
+    <h2 class="section-title">{title}</h2>
+    <ul class="tag-list">
+      {skills.map((skill: string) => (
+        <li class="tag">{skill}</li>
+      ))}
+    </ul>
+  </div>
+</section>

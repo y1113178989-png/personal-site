@@ -1,0 +1,48 @@
+---
+const { site, locale } = Astro.props;
+const name = site?.data?.name ?? 'Name';
+const tagline = site?.data?.tagline ?? '';
+---
+
+<section class="hero section">
+  <div class="container hero-content">
+    <div class="hero-text">
+      <h1 class="hero-name">{name}</h1>
+      <p class="hero-tagline">{tagline}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+  .hero-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+  .hero-name {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+  }
+  .hero-tagline {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding-top: var(--space-xl);
+      padding-bottom: var(--space-xl);
+    }
+    .hero-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

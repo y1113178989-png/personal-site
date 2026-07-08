@@ -1,0 +1,90 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import Icon from '../ui/Icon.astro';
+
+const { site, locale } = Astro.props;
+const { email, github, linkedin } = site?.data ?? {};
+const title = t(locale as Locale, 'nav.contact');
+---
+
+<section class="contact section" id="contact">
+  <div class="container">
+    <h2 class="section-title">{title}</h2>
+    <ul class="contact-list">
+      {github && (
+        <li>
+          <a href={github} class="contact-link" target="_blank" rel="noopener noreferrer">
+            <Icon name="github" size={20} />
+            <span>{t(locale as Locale, 'contact.github')}</span>
+            <span class="contact-handle">{new URL(github).pathname.slice(1)}</span>
+          </a>
+        </li>
+      )}
+      {email && (
+        <li>
+          <a href={`mailto:${email}`} class="contact-link">
+            <Icon name="email" size={20} />
+            <span>{t(locale as Locale, 'contact.email')}</span>
+            <span class="contact-handle">{email}</span>
+          </a>
+        </li>
+      )}
+      {linkedin && (
+        <li>
+          <a href={linkedin} class="contact-link" target="_blank" rel="noopener noreferrer">
+            <Icon name="linkedin" size={20} />
+            <span>LinkedIn</span>
+            <span class="contact-handle">{new URL(linkedin).pathname.slice(1)}</span>
+          </a>
+        </li>
+      )}
+    </ul>
+
+    <a href="/resume.pdf" class="resume-btn" download>
+      <Icon name="download" size={18} />
+      {t(locale as Locale, 'contact.resume')}
+    </a>
+  </div>
+</section>
+
+<style>
+  .contact-list {
+    list-style: none;
+    margin-bottom: var(--space-lg);
+  }
+  .contact-list li {
+    margin-bottom: var(--space-sm);
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-text);
+    text-decoration: none;
+    padding: var(--space-xs) 0;
+  }
+  .contact-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .contact-handle {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+  }
+  .resume-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0.625em 1.25em;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: #fff;
+    background: var(--color-accent);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+  .resume-btn:hover {
+    opacity: 0.9;
+    text-decoration: none;
+  }
+</style>

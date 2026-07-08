@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/home/HeroSection.astro';
+import AboutSection from '../../components/home/AboutSection.astro';
+import ExperienceSection from '../../components/home/ExperienceSection.astro';
+import SkillsSection from '../../components/home/SkillsSection.astro';
+import ContactSection from '../../components/home/ContactSection.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { locale: 'zh' } },
+    { params: { locale: 'en' } },
+  ];
+}
+
+const { locale } = Astro.params;
+
+// Fetch all content for this locale
+const siteEntries = await getCollection('site', ({ id }) => id === locale);
+const aboutEntries = await getCollection('about', ({ id }) => id === locale);
+const experienceEntries = await getCollection('experience', ({ id }) => id === locale);
+
+const site = siteEntries[0] ?? null;
+const about = aboutEntries[0] ?? null;
+const experience = experienceEntries[0] ?? null;
+
+const name = site?.data?.name ?? 'Name';
+const tagline = site?.data?.tagline ?? '';
+---
+
+<BaseLayout
+  title={`${name} — ${tagline}`}
+  description={tagline}
+  site={site}
+  locale={locale}
+>
+  <HeroSection {site} {locale} />
+  {about && <AboutSection {about} />}
+  <hr />
+  {experience && <ExperienceSection {experience} {locale} />}
+  {experience?.data?.skills && <SkillsSection {experience} {locale} />}
+  <hr />
+  <ContactSection {site} {locale} />
+</BaseLayout>

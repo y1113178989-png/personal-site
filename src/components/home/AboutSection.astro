@@ -1,0 +1,35 @@
+---
+const { about } = Astro.props;
+const title = about?.data?.title ?? 'About';
+const { Content } = about ?? { Content: null };
+---
+
+<section class="about section section-alt" id="about">
+  <div class="container">
+    <h2 class="section-title">{title}</h2>
+    {Content && (
+      <div class="prose">
+        <Content />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .section-title {
+    margin-bottom: var(--space-md);
+    font-weight: 600;
+  }
+  .prose :global(p) {
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+  .prose :global(h3) {
+    font-size: var(--text-lg);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+  .prose :global(a) {
+    color: var(--color-accent);
+  }
+</style>

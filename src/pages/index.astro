@@ -1,0 +1,12 @@
+---
+// Root redirect — client-side language detection
+---
+
+<meta http-equiv="refresh" content="0;url=/zh/" />
+<script is:inline>
+  const lang = navigator.language;
+  const target = lang.startsWith('zh') ? '/zh/' : '/en/';
+  if (window.location.pathname === '/') {
+    window.location.replace(target);
+  }
+</script>
