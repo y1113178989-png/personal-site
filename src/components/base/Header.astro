@@ -12,9 +12,12 @@ const navItems = [
 ];
 ---
 
-<header class="site-header">
+<header class="site-header" id="header">
   <div class="container header-inner">
-    <a href={`/${locale}/`} class="logo">{site?.data?.name ?? 'Name'}</a>
+    <a href={`/${locale}/`} class="logo">
+      <span class="logo-dot"></span>
+      {site?.data?.name ?? 'Name'}
+    </a>
     <nav class="nav" aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}>
       {navItems.map(({ href, key }) => (
         <a href={href} class="nav-link">{t(locale, key)}</a>
@@ -30,34 +33,67 @@ const navItems = [
     top: 0;
     z-index: 50;
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
-    backdrop-filter: blur(8px);
+    border-bottom: 1px solid transparent;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+  }
+  .site-header.scrolled {
+    border-bottom-color: var(--color-border);
+    box-shadow: var(--shadow-sm);
   }
   .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 3.5rem;
+    height: 3.75rem;
   }
   .logo {
-    font-weight: 600;
+    font-weight: 700;
     font-size: var(--text-lg);
     color: var(--color-text);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-gradient-1), var(--color-gradient-2));
+    display: inline-block;
   }
   .nav {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
+    gap: var(--space-lg);
   }
   .nav-link {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.2s ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, var(--color-gradient-1), var(--color-gradient-2));
+    border-radius: 1px;
+    transition: width 0.2s ease;
   }
   .nav-link:hover {
     color: var(--color-accent);
     text-decoration: none;
+  }
+  .nav-link:hover::after {
+    width: 100%;
   }
 
   @media (max-width: 640px) {
@@ -69,3 +105,13 @@ const navItems = [
     }
   }
 </style>
+
+<script>
+  // Add shadow on scroll
+  const header = document.getElementById('header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+  }
+</script>

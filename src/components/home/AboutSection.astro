@@ -4,11 +4,13 @@ const title = about?.data?.title ?? 'About';
 const { Content } = about ?? { Content: null };
 ---
 
-<section class="about section section-alt" id="about">
+<section class="about section" id="about">
   <div class="container">
-    <h2 class="section-title">{title}</h2>
+    <div class="reveal">
+      <h2 class="section-title">{title}</h2>
+    </div>
     {Content && (
-      <div class="prose">
+      <div class="prose reveal">
         <Content />
       </div>
     )}
@@ -16,20 +18,47 @@ const { Content } = about ?? { Content: null };
 </section>
 
 <style>
-  .section-title {
-    margin-bottom: var(--space-md);
-    font-weight: 600;
+  .about {
+    padding-block: var(--space-2xl);
+  }
+  .prose {
+    max-width: 42rem;
   }
   .prose :global(p) {
+    font-size: var(--text-base);
     color: var(--color-text);
     margin-bottom: var(--space-md);
+    line-height: 1.8;
   }
   .prose :global(h3) {
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
+    font-weight: 700;
     margin-top: var(--space-lg);
     margin-bottom: var(--space-sm);
+    color: var(--color-text);
+  }
+  .prose :global(strong) {
+    color: var(--color-accent);
   }
   .prose :global(a) {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+  .prose :global(ul) {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--space-lg);
+  }
+  .prose :global(li) {
+    position: relative;
+    padding-left: 1.5em;
+    margin-bottom: var(--space-xs);
+    line-height: 1.7;
+  }
+  .prose :global(li)::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
     color: var(--color-accent);
   }
 </style>
