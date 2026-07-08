@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+  site: 'https://y1113178989-png.github.io',
+  base: '/personal-site',
   i18n: {
     defaultLocale: 'zh',
     locales: ['zh', 'en'],
@@ -10,5 +11,4 @@ export default defineConfig({
     },
   },
   output: 'static',
-  adapter: vercel(),
 });
